@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WPET - Tienda de Mascotas</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --salmon: #E8856A;
+    --salmon-light: #F2A48A;
+    --blue-dark: #1A3A6B;
+    --blue-mid: #2563A8;
+    --teal: #4ABFB5;
+    --green: #5BAD6F;
+    --yellow: #F5C842;
+    --red: #E84040;
+    --gray-light: #F5F5F5;
+    --gray-mid: #E0E0E0;
+    --text-dark: #222;
+    --text-mid: #555;
+    --white: #fff;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    font-size: 14px;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* TOP BAR */
+  .top-bar {
+    background: var(--blue-dark);
+    color: #cce0ff;
+    font-size: 11.5px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar span { font-weight: 600; }
+  .top-bar .right { display: flex; gap: 18px; align-items: center; }
+  .top-bar .right a { color: #cce0ff; font-size: 11px; }
+
+  /* HEADER */
+  header {
+    background: var(--white);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--gray-mid);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--blue-dark);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .logo-paw { font-size: 22px; }
+
+  .search-bar {
+    flex: 1;
+    display: flex;
+    border: 2px solid var(--gray-mid);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 520px;
+  }
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 9px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+  }
+  .search-bar button {
+    background: var(--salmon);
+    border: none;
+    padding: 0 16px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+  }
+
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+  }
+  .header-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-mid);
+    cursor: pointer;
+    gap: 2px;
+  }
+  .header-icon .icon { font-size: 20px; }
+  .cart-btn {
+    background: var(--blue-dark);
+    color: white;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 2px solid var(--gray-mid);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+  }
+  nav a {
+    padding: 11px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-dark);
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+  }
+  nav a:hover { color: var(--salmon); border-bottom-color: var(--salmon); }
+  .nav-badge {
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 12px;
+    margin-left: 2px;
+    vertical-align: middle;
+  }
+  .nav-promo {
+    background: var(--salmon);
+    color: white !important;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #e8f0fb 0%, #f8ece6 100%);
+    padding: 0 0 0 48px;
+    display: flex;
+    align-items: stretch;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+    z-index: 2;
+  }
+  .hero-content h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--blue-dark);
+    line-height: 1.0;
+    margin-bottom: 6px;
+  }
+  .hero-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    color: var(--blue-dark);
+    margin-bottom: 12px;
+  }
+  .hero-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .hero-image {
+    flex: 1.2;
+    position: relative;
+    min-height: 320px;
+    overflow: hidden;
+  }
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .hero-badge {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    background: var(--salmon-light);
+    color: white;
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    text-align: center;
+    font-size: 13px;
+    z-index: 3;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .hero-badge .off-num { font-size: 38px; display: block; line-height: 1; }
+  .hero-badge .off-text { font-size: 20px; }
+
+  .hero-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .hero-nav.left { left: 8px; }
+  .hero-nav.right { right: 8px; }
+
+  .hero-dots {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 10;
+  }
+  .hero-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+  .hero-dot.active { background: var(--salmon); }
+
+  /* PERKS */
+  .perks {
+    background: white;
+    border-bottom: 1px solid var(--gray-mid);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .perk {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .perk-icon { font-size: 28px; }
+  .perk-text strong { font-size: 13px; font-weight: 800; color: var(--text-dark); display: block; }
+  .perk-text span { font-size: 11.5px; color: var(--text-mid); }
+
+  /* PRODUCTS SECTION */
+  .products-section {
+    padding: 32px 32px;
+    background: var(--gray-light);
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text-dark);
+    line-height: 1.2;
+  }
+  .category-tabs {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .cat-tab {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: white;
+    color: var(--text-mid);
+    transition: all .2s;
+  }
+  .cat-tab.active, .cat-tab:hover {
+    border-color: var(--salmon);
+    color: var(--salmon);
+  }
+  .cat-tab.active { text-decoration: underline; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    cursor: pointer;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+  .product-img {
+    background: #f9f6f3;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .badge-2x1 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--teal);
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .badge-off {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--red);
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .badge-paw {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+
+  .product-info {
+    padding: 12px 14px 16px;
+  }
+  .product-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .product-variant {
+    font-size: 11px;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+  }
+  .product-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--text-dark);
+  }
+  .add-btn {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: var(--salmon);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+  }
+  .add-btn:hover { background: var(--blue-dark); }
+
+  /* FOOTER */
+  footer {
+    background: var(--blue-dark);
+    color: #cce0ff;
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: #cce0ff; font-weight: 600; }
+  .footer-links a:hover { color: white; }
+  .footer-email {
+    display: flex;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .footer-email input {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    outline: none;
+    min-width: 180px;
+  }
+  .footer-email input::placeholder { color: rgba(255,255,255,0.5); }
+  .footer-email button {
+    background: var(--salmon);
+    border: none;
+    padding: 0 14px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .footer-social { display: flex; gap: 14px; font-size: 20px; }
+  .footer-social a { color: #cce0ff; }
+  .footer-social a:hover { color: white; }
+
+  /* PRODUCT IMG PLACEHOLDERS */
+  .img-bowl { background: linear-gradient(135deg, #d8d0c8 0%, #ece6e0 100%); }
+  .img-toy { background: linear-gradient(135deg, #b8d8f0 0%, #d4ebff 100%); }
+  .img-harness { background: linear-gradient(135deg, #c8d8b8 0%, #dff0d8 100%); }
+  .img-food { background: linear-gradient(135deg, #f0d8b8 0%, #ffe8cc 100%); }
+
+  @media (max-width: 900px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-content h1 { font-size: 34px; }
+    .hero-price { font-size: 30px; }
+    .perks { gap: 24px; }
+  }
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .hero { flex-direction: column; padding: 24px; }
+    .hero-image { min-height: 180px; }
+    .top-bar .right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span>🚚 DELIVERY GRATIS POR COMPRAS MAYORES A S/ 90 | A Todo Arequipa</span>
+  <div class="right">
+    <a href="#">Atención al Cliente</a>
+    <a href="#">📞 987654321>
+    <a href="#">📞 01 737 0870</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">WPET <span class="logo-paw">🐾</span></div>
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar productos">
+    <button>🔍</button>
+  </div>
+  <div class="header-icons">
+    <div class="header-icon">
+      <span class="icon">⚖️</span>
+    </div>
+    <div class="header-icon">
+      <span class="icon">🤍</span>
+    </div>
+    <div class="header-icon">
+      <span class="icon">👤</span>
+      <span>Acceso / Registro</span>
+    </div>
+    <div class="cart-btn">
+      🛒 <span>S/ 0.00</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#">🐶 Perros</a>
+  <a href="#">🐱 Gatos</a>
+  <a href="#">🐦 Roedores Y Aves</a>
+  <a href="#">🐾 Pet Lovers</a>
+  <a href="#">✨ Lo Nuevo</a>
+  <a href="#" class="nav-promo">Ofertas 🔥 <span class="nav-badge">HOT</span></a>
+  <a href="#">Blog</a>
+  <a href="#" style="color:var(--salmon);font-weight:900;margin-left:auto;">LIQUIDACIÓN</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" style="position:relative;">
+  <button class="hero-nav left">&#8249;</button>
+  <div class="hero-content">
+    <h1>BIENVENIDO<br>A WPET!</h1>
+    <p class="hero-desc">Descubre accesorios premium y alimentos nutritivos, en acuerdos en tu pet, etc.</p>
+  </div>
+  <div class="hero-image" style="position:relative;flex:1.3;overflow:hidden;">
+    <!-- Placeholder pets image using emoji art -->
+    <div style="width:100%;height:100%;background:linear-gradient(135deg,#e8f4e8 0%,#d4ecd8 50%,#c8e4d8 100%);display:flex;align-items:center;justify-content:center;font-size:100px;gap:20px;padding:20px;">
+      🐕 🐈
+    </div>
+    <div class="hero-badge">
+      <span class="off-num">60<sup style="font-size:20px">%</sup></span>
+      <span class="off-text">OFF</span>
+    </div>
+    <div style="position:absolute;bottom:70px;right:60px;width:70px;height:70px;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.15);background:#d0c8c0;display:flex;align-items:center;justify-content:center;font-size:36px;">🐕</div>
+  </div>
+  <button class="hero-nav right">&#8250;</button>
+  <div class="hero-dots">
+    <div class="hero-dot active"></div>
+    <div class="hero-dot"></div>
+    <div class="hero-dot"></div>
+  </div>
+</div>
+
+<!-- PERKS -->
+<div class="perks">
+  <div class="perk">
+    <span class="perk-icon">🚚</span>
+    <div class="perk-text">
+      <strong>Delivery Gratis</strong>
+      <span>(compras &gt;90 soles)</span>
+    </div>
+  </div>
+  <div class="perk">
+    <span class="perk-icon">🌍</span>
+    <div class="perk-text">
+      <strong>Productos Únicos</strong>
+      <span>Traídos de Europa y Norte América</span>
+    </div>
+  </div>
+  <div class="perk">
+    <span class="perk-icon">🏷️</span>
+    <div class="perk-text">
+      <strong>15% OFF el 1er pedido</strong>
+      <span>(cupón WPET15)</span>
+    </div>
+  </div>
+  <div class="perk">
+    <span class="perk-icon">🏪</span>
+    <div class="perk-text">
+      <strong>Recojo en Tienda</strong>
+      <span>¡Graba!</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<div class="products-section">
+  <div class="section-header">
+    <div class="section-title">CATEGORÍAS POPULARES –<br>2X1 EN CAT. SELECCIONADAS</div>
+    <div class="category-tabs">
+      <div class="cat-tab active">Comederos y Bebederos</div>
+      <div class="cat-tab">Collares y Correas</div>
+      <div class="cat-tab">Higiene</div>
+      <div class="cat-tab">Juguetes</div>
+    </div>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <div class="product-img img-bowl">
+        <span style="font-size:72px;">🥣</span>
+        <div class="badge-2x1">2x1</div>
+        <div class="badge-paw">🐾</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Scruffs Bowl para Perro Icon Food Bowl Long Eared</div>
+        <div class="product-variant">Crema: Gris</div>
+        <div class="product-price">S/ 95.50</div>
+      </div>
+      <button class="add-btn">+</button>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <div class="product-img img-toy">
+        <span style="font-size:72px;">🎾</span>
+        <div class="badge-2x1">2x1</div>
+        <div class="badge-paw">🐾</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Cat Sam Toy Toy</div>
+        <div class="product-variant">Color: Gris</div>
+        <div class="product-price">S/ 95.50</div>
+      </div>
+      <button class="add-btn">+</button>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <div class="product-img img-harness">
+        <span style="font-size:72px;">🦺</span>
+        <div class="badge-2x1">2x1</div>
+        <div class="badge-paw">🐾</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Trixie Nordic ro Unique Harness</div>
+        <div class="product-variant">Color: Gris</div>
+        <div class="product-price">S/ 137.00</div>
+      </div>
+      <button class="add-btn">+</button>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <div class="product-img img-food">
+        <span style="font-size:72px;">🐾</span>
+        <div class="badge-off">60% OFF</div>
+        <div class="badge-2x1" style="top:auto;bottom:10px;left:10px;">2x1</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Carasman Premium Banorato 30 kg</div>
+        <div class="product-variant">Color: Gría, Gria</div>
+        <div class="product-price">S/ 95.50</div>
+      </div>
+      <button class="add-btn">+</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#">Quiénes Somos</a>
+    <a href="#">Contacto</a>
+    <a href="#">Términos y Condiciones</a>
+  </div>
+  <div class="footer-email">
+    <input type="email" placeholder="Entrar un email aquí">
+    <button>➤</button>
+  </div>
+  <div class="footer-social">
+    <a href="#">📘</a>
+    <a href="#">📸</a>
+    <a href="#">▶️</a>
+  </div>
+</footer>
+
+<script>
+  // Category tabs
+  document.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Add to cart animation
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.textContent = '✓';
+      btn.style.background = '#5BAD6F';
+      setTimeout(() => {
+        btn.textContent = '+';
+        btn.style.background = '';
+      }, 1000);
+    });
+  });
+
+  // Hero dots
+  document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      document.querySelectorAll('.hero-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
